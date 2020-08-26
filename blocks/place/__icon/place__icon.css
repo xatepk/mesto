@@ -1,0 +1,8 @@
+.place__icon {
+  border: none;
+  width: 20px;
+  height: 18px;
+  background: url('../../../images/like.svg') no-repeat center;
+  background-size: cover;
+}
+
