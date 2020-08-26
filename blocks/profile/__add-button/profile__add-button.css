@@ -12,9 +12,9 @@
   border: 1px solid rgba(255, 255, 255, .6);
 }
 
-@media screen and (max-width: 321px) {
+@media screen and (max-width: 767px) {
   .profile__add-button {
-    min-width: 282px;
+    max-width: 282px;
     margin: auto;
   }
 }

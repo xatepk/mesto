@@ -2,7 +2,7 @@
   display: flex;
 }
 
-@media screen and (max-width: 321px) {
+@media screen and (max-width: 767px) {
   .profile__view {
     flex-direction: column;
     align-items: center;
