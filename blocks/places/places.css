@@ -1,5 +1,4 @@
 .places {
-  width: 88.12%;
   max-width: 882px;
   display: grid;
   grid-template-columns: repeat(auto-fit, 282px);
