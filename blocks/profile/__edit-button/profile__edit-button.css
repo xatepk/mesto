@@ -9,7 +9,7 @@
 .profile__edit-button:hover {
   cursor: pointer;
   opacity: .6;
-  border: 1px solid rgba(255, 255, 255, .6);
+  transition: opacity .5s ease-out;
 }
 
 @media screen and (max-width: 321px) {

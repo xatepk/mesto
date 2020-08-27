@@ -16,71 +16,75 @@
     <main class="content">
       <section class="profile">
         <div class="profile__view">
-          <img src="./images/profile avatar.jpeg" alt="фото профиля" class="profile__avatar">
+          <img src="./images/profile-avatar.jpeg" alt="фото профиля" class="profile__avatar">
         <div class="profile__info">
-          <h1 class="profile__name">Жак-Ив Кусто</h1>
-          <button class="profile__edit-button"></button>
+          <div class="profile__heading">
+            <h1 class="profile__name">Жак-Ив Кусто</h1>
+            <button class="profile__edit-button" type="button"></button>
+          </div>
           <p class="profile__about-self">Исследователь океана</p>
         </div>
         </div>
 
-        <button class="profile__add-button"></button>
+        <button class="profile__add-button" type="button"></button>
       </section>
       <section class="places">
-        <div class="place">
-          <img src="./images/place/Камчатка.jpg" alt="Камчатка" class="place__image">
-          <div class="place__description">
-            <p class="place__name">Камчатка</p>
-            <button class="place__icon"></button>
-          </div>
-        </div>
-        <div class="place">
-          <img src="./images/place//Юаньян.jpg" alt="Юаньян" class="place__image">
-          <div class="place__description">
-            <p class="place__name">Юаньян</p>
-            <button class="place__icon"></button>
-          </div>
-        </div>
-        <div class="place">
-          <img src="./images/place/Озеро План.jpg" alt="Озеро План" class="place__image">
-          <div class="place__description">
-            <p class="place__name">Озеро План</p>
-            <button class="place__icon"></button>
-          </div>
-        </div>
-        <div class="place">
-          <img src="./images/place/Мункебо.jpg" alt="Мункебо" class="place__image">
-          <div class="place__description">
-            <p class="place__name">Мункебо</p>
-            <button class="place__icon"></button>
-          </div>
-        </div>
-        <div class="place">
-          <img src="./images/place/Колорадо.jpg" alt="Колорадо" class="place__image">
-          <div class="place__description">
-            <p class="place__name">Колорадо</p>
-            <button class="place__icon"></button>
-          </div>
-        </div>
-        <div class="place">
-          <img src="./images/place/Маттерхорн.jpg" alt="Маттерхорн" class="place__image">
-          <div class="place__description">
-            <p class="place__name">Маттерхорн</p>
-            <button class="place__icon"></button>
-          </div>
-        </div>
+        <ul class="places__list">
+          <li class="place">
+            <img src="./images/place/kamchatke.jpg" alt="Камчатка" class="place__image">
+            <div class="place__description">
+              <h2 class="place__name">Камчатка</h2>
+              <button class="place__icon" type="button"></button>
+            </div>
+          </li>
+          <li class="place">
+            <img src="./images/place//yuanyan.jpg" alt="Юаньян" class="place__image">
+            <div class="place__description">
+              <h2 class="place__name">Юаньян</h2>
+              <button class="place__icon" type="button"></button>
+            </div>
+          </li>
+          <li class="place">
+            <img src="./images/place/plan.jpg" alt="Озеро План" class="place__image">
+            <div class="place__description">
+              <h2 class="place__name">Озеро План</h2>
+              <button class="place__icon" type="button"></button>
+            </div>
+          </li>
+          <li class="place">
+            <img src="./images/place/munkebo.jpg" alt="Мункебо" class="place__image">
+            <div class="place__description">
+              <h2 class="place__name">Мункебо</h2>
+              <button class="place__icon" type="button"></button>
+            </div>
+          </li>
+          <li class="place">
+            <img src="./images/place/colorado.jpg" alt="Колорадо" class="place__image">
+            <div class="place__description">
+              <h2 class="place__name">Колорадо</h2>
+              <button class="place__icon" type="button"></button>
+            </div>
+          </li>
+          <li class="place">
+            <img src="./images/place/matterkhorn.jpg" alt="Маттерхорн" class="place__image">
+            <div class="place__description">
+              <h2 class="place__name">Маттерхорн</h2>
+              <button class="place__icon" type="button"></button>
+            </div>
+          </li>
+        </ul>
       </section>
     </main>
 
     <div class="popup">
       <div class="popup__container">
-        <form class="popup__admin">
+        <form class="popup__admin" method="POST" action="#" name="profile">
           <h2 class="popup__heading">Редактировать профиль</h2>
           <input type="text" name="name" class="popup__item popup__item_el_name" placeholder="Ваше Имя">
           <input type="text" name="about-self" class="popup__item popup__item_el_about-self" placeholder="О себе">
           <input type="submit" value= "Сохранить" class="popup__button">
-          <button type="reset" class="popup__close"></button>
         </form>
+        <button type="button" class="popup__close"></button>
       </div>
     </div>
 

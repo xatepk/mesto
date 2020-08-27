@@ -6,3 +6,7 @@
   background-size: cover;
 }
 
+.place__icon:hover {
+  cursor: pointer;
+}
+
