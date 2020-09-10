@@ -20,58 +20,16 @@
         <div class="profile__info">
           <div class="profile__heading">
             <h1 class="profile__name">Жак-Ив Кусто</h1>
-            <button class="profile__edit-button" type="button"></button>
+            <button class="profile__edit-button" aria-label="edit" type="button"></button>
           </div>
           <p class="profile__about-self">Исследователь океана</p>
         </div>
         </div>
 
-        <button class="profile__add-button" type="button"></button>
+        <button class="profile__add-button" aria-label="add" type="button"></button>
       </section>
       <section class="places">
         <ul class="places__list">
-          <li class="place">
-            <img src="./images/place/kamchatke.jpg" alt="Камчатка" class="place__image">
-            <div class="place__description">
-              <h2 class="place__name">Камчатка</h2>
-              <button class="place__icon" type="button"></button>
-            </div>
-          </li>
-          <li class="place">
-            <img src="./images/place/yuanyan.jpg" alt="Юаньян" class="place__image">
-            <div class="place__description">
-              <h2 class="place__name">Юаньян</h2>
-              <button class="place__icon" type="button"></button>
-            </div>
-          </li>
-          <li class="place">
-            <img src="./images/place/plan.jpg" alt="Озеро План" class="place__image">
-            <div class="place__description">
-              <h2 class="place__name">Озеро План</h2>
-              <button class="place__icon" type="button"></button>
-            </div>
-          </li>
-          <li class="place">
-            <img src="./images/place/munkebo.jpg" alt="Мункебо" class="place__image">
-            <div class="place__description">
-              <h2 class="place__name">Мункебо</h2>
-              <button class="place__icon" type="button"></button>
-            </div>
-          </li>
-          <li class="place">
-            <img src="./images/place/colorado.jpg" alt="Колорадо" class="place__image">
-            <div class="place__description">
-              <h2 class="place__name">Колорадо</h2>
-              <button class="place__icon" type="button"></button>
-            </div>
-          </li>
-          <li class="place">
-            <img src="./images/place/matterkhorn.jpg" alt="Маттерхорн" class="place__image">
-            <div class="place__description">
-              <h2 class="place__name">Маттерхорн</h2>
-              <button class="place__icon" type="button"></button>
-            </div>
-          </li>
         </ul>
       </section>
     </main>
@@ -84,7 +42,19 @@
           <input type="text" name="about-self" class="popup__item popup__item_el_about-self" placeholder="О себе">
           <input type="submit" value= "Сохранить" class="popup__button">
         </form>
-        <button type="button" class="popup__close"></button>
+        <button type="button" aria-label="close" class="popup__close"></button>
+      </div>
+    </div>
+
+    <div class="popup">
+      <div class="popup__container">
+        <form class="popup__admin" method="POST" action="#" name="profile">
+          <h2 class="popup__heading">Новое место</h2>
+          <input type="text" name="place-name" class="popup__item popup__item_el_name" placeholder="Название">
+          <input type="url" name="place-photo" class="popup__item popup__item_el_about-self" placeholder="Ссылка на картинку">
+          <input type="submit" value= "Создать" class="popup__button">
+        </form>
+        <button type="button" aria-label="close" class="popup__close"></button>
       </div>
     </div>
 
@@ -92,6 +62,18 @@
       <p class="footer__copyright">&copy; 2020. Mesto Russia</p>
     </footer>
   </div>
+
+
+
+  <template id="places">
+    <li class="place">
+      <img class="place__image">
+      <div class="place__description">
+        <h2 class="place__name"></h2>
+        <button class="place__icon" aria-label="place-icon" type="button"></button>
+      </div>
+    </li>
+  </template>
 
   <script src="./scripts/script.js"></script>
 </body>
