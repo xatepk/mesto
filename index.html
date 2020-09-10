@@ -34,7 +34,7 @@
       </section>
     </main>
 
-    <div class="popup">
+    <div class="popup popup_el_edit">
       <div class="popup__container">
         <form class="popup__admin" method="POST" action="#" name="profile">
           <h2 class="popup__heading">Редактировать профиль</h2>
@@ -46,12 +46,12 @@
       </div>
     </div>
 
-    <div class="popup">
+    <div class="popup popup_el_add">
       <div class="popup__container">
-        <form class="popup__admin" method="POST" action="#" name="profile">
+        <form class="popup__admin" method="POST" action="#" name="place">
           <h2 class="popup__heading">Новое место</h2>
-          <input type="text" name="place-name" class="popup__item popup__item_el_name" placeholder="Название">
-          <input type="url" name="place-photo" class="popup__item popup__item_el_about-self" placeholder="Ссылка на картинку">
+          <input type="text" name="name" class="popup__item popup__item_el_name" placeholder="Название">
+          <input type="url" name="about-self" class="popup__item popup__item_el_url" placeholder="Ссылка на картинку">
           <input type="submit" value= "Создать" class="popup__button">
         </form>
         <button type="button" aria-label="close" class="popup__close"></button>
@@ -72,6 +72,7 @@
         <h2 class="place__name"></h2>
         <button class="place__icon" aria-label="place-icon" type="button"></button>
       </div>
+      <button class="place__delete" aria-label="place-del" type="button"></button>
     </li>
   </template>
 

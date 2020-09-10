@@ -2,13 +2,18 @@ const profile = document.querySelector('.profile');
 const userName = profile.querySelector('.profile__name');
 const aboutSelf = profile.querySelector('.profile__about-self');
 const editButton = profile.querySelector('.profile__edit-button');
+const addButton = profile.querySelector('.profile__add-button');
 
-const formElements = document.querySelector('.popup');
-const nameInput = formElements.querySelector('.popup__item_el_name');
-const jobInput = formElements.querySelector('.popup__item_el_about-self');
+const formElementEdit = document.querySelector('.popup_el_edit');
+const nameInputEdit = formElementEdit.querySelector('.popup__item_el_name');
+const jobInputEdit = formElementEdit.querySelector('.popup__item_el_about-self');
+const closeButtonEdit = formElementEdit.querySelector('.popup__close');
+const submitButtonEdit = formElementEdit.querySelector('.popup__button');
 
-const closeButton = formElements.querySelector('.popup__close');
-const submitButton = formElements.querySelector('.popup__button');
+const formElementAdd = document.querySelector('.popup_el_add');
+const closeButtonAdd = formElementAdd.querySelector('.popup__close');
+const submitButtonAdd = formElementAdd.querySelector('.popup__button');
+
 
 const placeContainer= document.querySelector('.places__list');
 const initialCards = [
@@ -38,36 +43,65 @@ const initialCards = [
 
   }
 ];
+function render() {
+    placeContainer.innerHTML = "";
+    initialCards.forEach(item => {
+    const placeTemplate = document.querySelector('#places').content;
+    const placeElement = placeTemplate.cloneNode(true);
 
-initialCards.forEach(item => {
-  const placeTemplate = document.querySelector('#places').content;
-  const placeElement = placeTemplate.cloneNode(true);
+    placeElement.querySelector('.place__image').src = item.link;
+    placeElement.querySelector('.place__name').textContent = item.name;
+    placeContainer.append(placeElement);
+  });
 
-  placeElement.querySelector('.place__image').src = item.link;
-  placeElement.querySelector('.place__name').textContent = item.name;
-  placeContainer.append(placeElement);
+  setListeners();
+}
 
-});
+function handlerDelete(evt) {
+  evt.target.parentNode.remove();
+}
 
-const formStatus = () => {
-  formElements.classList.toggle('popup_opened');
-  if (formElements.classList.contains('popup_opened')) {
-    nameInput.value = userName.textContent;
-    jobInput.value = aboutSelf.textContent;
+function handlerLike(evt) {
+  evt.target.classList.toggle('place__icon_is-active');
+}
+
+function formStatus(evt, element) {
+  element.classList.toggle('popup_opened');
+  if (formElementEdit.classList.contains('popup_opened')) {
+    nameInputEdit.value = userName.textContent;
+    jobInputEdit.value = aboutSelf.textContent;
   }
 }
 
 
-const formSubmitHandler = (evt) => {
+const formSubmitHandler = (evt, element) => {
     evt.preventDefault();
 
-    userName.textContent = nameInput.value;
-    aboutSelf.textContent = jobInput.value;
-    formStatus()
+    if (element.classList.contains('popup_el_edit')) {
+      userName.textContent = nameInputEdit.value;
+      aboutSelf.textContent = jobInputEdit.value;
+    } else if (element.classList.contains('popup_el_add') && evt.target.querySelector('.popup__item_el_name').value && evt.target.querySelector('.popup__item_el_url').value) {
+      initialCards.unshift({name: evt.target.querySelector('.popup__item_el_name').value, link: evt.target.querySelector('.popup__item_el_url').value});
+      render();
+    };
+    formStatus(evt, element);
 }
 
 
-editButton.addEventListener('click', formStatus);
-closeButton.addEventListener('click', formStatus);
-formElements.addEventListener('submit', formSubmitHandler);
+function setListeners() {
+  document.querySelectorAll('.place__delete').forEach(btn => {
+    btn.addEventListener('click', handlerDelete);
+  });
+  document.querySelectorAll('.place__icon').forEach(btn => {
+    btn.addEventListener('click', handlerLike);
+  });
+}
 
+editButton.addEventListener('click', evt => formStatus(evt, formElementEdit));
+  addButton.addEventListener('click', evt => formStatus(evt, formElementAdd));
+  closeButtonEdit.addEventListener('click', evt => formStatus(evt, formElementEdit));
+  closeButtonAdd.addEventListener('click', evt => formStatus(evt, formElementAdd));
+  formElementEdit.addEventListener('submit', evt => formSubmitHandler(evt, formElementEdit));
+  formElementAdd.addEventListener('submit', evt => formSubmitHandler(evt, formElementAdd));
+
+render();
