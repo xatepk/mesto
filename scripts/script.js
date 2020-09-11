@@ -51,8 +51,8 @@ const initialCards = [
 
 //инициализация карточек с местами
 function render() {
-    placeContainer.innerHTML = "";
-    initialCards.forEach(item => {
+  placeContainer.innerHTML = "";
+  initialCards.forEach(item => {
     const placeTemplate = document.querySelector('#places').content;
     const placeElement = placeTemplate.cloneNode(true);
 
@@ -114,7 +114,10 @@ const formSubmitHandler = (evt, element) => {
       userName.textContent = nameInputEdit.value;
       aboutSelf.textContent = jobInputEdit.value;
     } else if (element.classList.contains('popup_el_add')) {
-      initialCards.unshift({name: evt.target.querySelector('.popup__item_el_name').value, link: evt.target.querySelector('.popup__item_el_url').value});
+      initialCards.unshift({
+        name: evt.target.querySelector('.popup__item_el_name').value,
+        link: evt.target.querySelector('.popup__item_el_url').value,
+      });
       render();
     };
     formStatus(evt, element);
@@ -137,7 +140,7 @@ function setListeners() {
 //установка свойств для плавного закрытия попапа
 function ready() {
   document.querySelectorAll('.popup').forEach(el => {
-    el.classList.add('popup__load');
+      el.classList.add('popup__load');
     });
 }
 
