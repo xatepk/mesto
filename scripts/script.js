@@ -89,6 +89,9 @@ function formStatus(evt, element) {
   if (formElementEdit.classList.contains('popup_opened')) {
     nameInputEdit.value = userName.textContent;
     jobInputEdit.value = aboutSelf.textContent;
+  } else if (formElementAdd.classList.contains('popup_opened')) {
+    element.querySelector('.popup__item_el_name').value = "";
+    element.querySelector('.popup__item_el_url').value = "";
   }
 }
 
