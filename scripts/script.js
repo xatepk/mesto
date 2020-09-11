@@ -15,6 +15,8 @@ const closeButtonAdd = formElementAdd.querySelector('.popup__close');
 const submitButtonAdd = formElementAdd.querySelector('.popup__button');
 
 
+const formElementCard= document.querySelector('.popup_el_card');
+
 const placeContainer= document.querySelector('.places__list');
 const initialCards = [
   {
@@ -50,6 +52,7 @@ function render() {
     const placeElement = placeTemplate.cloneNode(true);
 
     placeElement.querySelector('.place__image').src = item.link;
+    placeElement.querySelector('.place__image').alt = item.name;;
     placeElement.querySelector('.place__name').textContent = item.name;
     placeContainer.append(placeElement);
   });
@@ -63,6 +66,22 @@ function handlerDelete(evt) {
 
 function handlerLike(evt) {
   evt.target.classList.toggle('place__icon_is-active');
+}
+
+function handlerCardPopup(evt) {
+  formElementCard.innerHTML = "";
+  const cardTemplate = document.querySelector('#cards').content;
+  const cardElement = cardTemplate.cloneNode(true);
+
+  cardElement.querySelector('.popup__card-image').src = evt.target.parentNode.querySelector('.place__image').src;
+  cardElement.querySelector('.popup__card-image').alt = evt.target.parentNode.querySelector('.place__image').alt;
+  cardElement.querySelector('.popup__card-heading').textContent = evt.target.parentNode.querySelector('.place__name').textContent;
+  formElementCard.append(cardElement);
+
+  formStatus(evt, formElementCard);
+
+  const closeButtonCard = formElementCard.querySelector('.popup__close');
+  closeButtonCard.addEventListener('click', evt => formStatus(evt, formElementCard));
 }
 
 function formStatus(evt, element) {
@@ -80,7 +99,7 @@ const formSubmitHandler = (evt, element) => {
     if (element.classList.contains('popup_el_edit')) {
       userName.textContent = nameInputEdit.value;
       aboutSelf.textContent = jobInputEdit.value;
-    } else if (element.classList.contains('popup_el_add') && evt.target.querySelector('.popup__item_el_name').value && evt.target.querySelector('.popup__item_el_url').value) {
+    } else if (element.classList.contains('popup_el_add')) {
       initialCards.unshift({name: evt.target.querySelector('.popup__item_el_name').value, link: evt.target.querySelector('.popup__item_el_url').value});
       render();
     };
@@ -95,9 +114,19 @@ function setListeners() {
   document.querySelectorAll('.place__icon').forEach(btn => {
     btn.addEventListener('click', handlerLike);
   });
+  document.querySelectorAll('.place__image').forEach(btn => {
+    btn.addEventListener('click', handlerCardPopup);
+  });
+
 }
 
-editButton.addEventListener('click', evt => formStatus(evt, formElementEdit));
+  function ready() {
+    document.querySelectorAll('.popup').forEach(el => {
+      el.classList.add('popup__load');
+      });
+  }
+
+  editButton.addEventListener('click', evt => formStatus(evt, formElementEdit));
   addButton.addEventListener('click', evt => formStatus(evt, formElementAdd));
   closeButtonEdit.addEventListener('click', evt => formStatus(evt, formElementEdit));
   closeButtonAdd.addEventListener('click', evt => formStatus(evt, formElementAdd));
@@ -105,3 +134,4 @@ editButton.addEventListener('click', evt => formStatus(evt, formElementEdit));
   formElementAdd.addEventListener('submit', evt => formSubmitHandler(evt, formElementAdd));
 
 render();
+document.addEventListener("load", ready());

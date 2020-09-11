@@ -15,8 +15,3 @@
   transition: opacity .5s ease-out;
 }
 
-@media screen and (max-width: 767px) {
-  .popup__close {
-    transform: translate(-100%, -100%);
-  }
-}
