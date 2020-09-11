@@ -1,3 +1,4 @@
+//объявление глобальных переменных
 const profile = document.querySelector('.profile');
 const userName = profile.querySelector('.profile__name');
 const aboutSelf = profile.querySelector('.profile__about-self');
@@ -18,6 +19,8 @@ const submitButtonAdd = formElementAdd.querySelector('.popup__button');
 const formElementCard= document.querySelector('.popup_el_card');
 
 const placeContainer= document.querySelector('.places__list');
+
+//массив карточек
 const initialCards = [
   {
       name: 'Камчатка',
@@ -45,6 +48,8 @@ const initialCards = [
 
   }
 ];
+
+//инициализация карточек с местами
 function render() {
     placeContainer.innerHTML = "";
     initialCards.forEach(item => {
@@ -57,17 +62,22 @@ function render() {
     placeContainer.append(placeElement);
   });
 
+  //установка обработчиков событий для карточек
   setListeners();
 }
 
+
+//удаление карточки
 function handlerDelete(evt) {
   evt.target.parentNode.remove();
 }
 
+//установка-сброс лайка с карточки
 function handlerLike(evt) {
   evt.target.classList.toggle('place__icon_is-active');
 }
 
+//открытие попап формы с карточкой
 function handlerCardPopup(evt) {
   formElementCard.innerHTML = "";
   const cardTemplate = document.querySelector('#cards').content;
@@ -84,6 +94,7 @@ function handlerCardPopup(evt) {
   closeButtonCard.addEventListener('click', evt => formStatus(evt, formElementCard));
 }
 
+//открытие-закрытие форм
 function formStatus(evt, element) {
   element.classList.toggle('popup_opened');
   if (formElementEdit.classList.contains('popup_opened')) {
@@ -95,7 +106,7 @@ function formStatus(evt, element) {
   }
 }
 
-
+//обработчик события submit формы
 const formSubmitHandler = (evt, element) => {
     evt.preventDefault();
 
@@ -109,7 +120,7 @@ const formSubmitHandler = (evt, element) => {
     formStatus(evt, element);
 }
 
-
+//установка обработчиков событий для карточек
 function setListeners() {
   document.querySelectorAll('.place__delete').forEach(btn => {
     btn.addEventListener('click', handlerDelete);
@@ -123,18 +134,19 @@ function setListeners() {
 
 }
 
-  function ready() {
-    document.querySelectorAll('.popup').forEach(el => {
-      el.classList.add('popup__load');
-      });
-  }
+//установка свойств для плавного закрытия попапа
+function ready() {
+  document.querySelectorAll('.popup').forEach(el => {
+    el.classList.add('popup__load');
+    });
+}
 
-  editButton.addEventListener('click', evt => formStatus(evt, formElementEdit));
-  addButton.addEventListener('click', evt => formStatus(evt, formElementAdd));
-  closeButtonEdit.addEventListener('click', evt => formStatus(evt, formElementEdit));
-  closeButtonAdd.addEventListener('click', evt => formStatus(evt, formElementAdd));
-  formElementEdit.addEventListener('submit', evt => formSubmitHandler(evt, formElementEdit));
-  formElementAdd.addEventListener('submit', evt => formSubmitHandler(evt, formElementAdd));
+editButton.addEventListener('click', evt => formStatus(evt, formElementEdit));
+addButton.addEventListener('click', evt => formStatus(evt, formElementAdd));
+closeButtonEdit.addEventListener('click', evt => formStatus(evt, formElementEdit));
+closeButtonAdd.addEventListener('click', evt => formStatus(evt, formElementAdd));
+formElementEdit.addEventListener('submit', evt => formSubmitHandler(evt, formElementEdit));
+formElementAdd.addEventListener('submit', evt => formSubmitHandler(evt, formElementAdd));
 
 render();
 document.addEventListener("load", ready());
