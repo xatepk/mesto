@@ -66,6 +66,18 @@ function render() {
   setListeners();
 }
 
+//добавление карточек
+function handlerAdd(evt) {
+  const placeTemplateAdd = document.querySelector('#places').content;
+  const placeElementAdd = placeTemplateAdd.cloneNode(true);
+  placeElementAdd.querySelector('.place__image').src = evt.target.querySelector('.popup__item_el_url').value;
+  placeElementAdd.querySelector('.place__image').alt = evt.target.querySelector('.popup__item_el_name').value;
+  placeElementAdd.querySelector('.place__name').textContent = evt.target.querySelector('.popup__item_el_name').value;
+  placeContainer.prepend(placeElementAdd);
+
+  setListeners();
+
+}
 
 //удаление карточки
 function handlerDelete(evt) {
@@ -114,15 +126,11 @@ const formSubmitHandler = (evt, element) => {
       userName.textContent = nameInputEdit.value;
       aboutSelf.textContent = jobInputEdit.value;
     } else if (element.classList.contains('popup_el_add')) {
-      const placeTemplateAdd = document.querySelector('#places').content;
-      const placeElementAdd = placeTemplateAdd.cloneNode(true);
-      placeElementAdd.querySelector('.place__image').src = evt.target.querySelector('.popup__item_el_url').value;
-      placeElementAdd.querySelector('.place__image').alt = evt.target.querySelector('.popup__item_el_name').value;
-      placeElementAdd.querySelector('.place__name').textContent = evt.target.querySelector('.popup__item_el_name').value;
-      placeContainer.prepend(placeElementAdd);
-      
-      setListeners();
+
+      handlerAdd(evt);
+
     };
+
     formStatus(evt, element);
 }
 
