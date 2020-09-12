@@ -75,11 +75,12 @@ function handlerAdd(evt) {
   placeElementAddImage.src = evt.target.querySelector('.popup__item_el_url').value;
   placeElementAddImage.alt = evt.target.querySelector('.popup__item_el_name').value;
   placeElementAdd.querySelector('.place__name').textContent = evt.target.querySelector('.popup__item_el_name').value;
-  placeContainer.prepend(placeElementAdd);
 
-  placeContainer.querySelector('.place__delete').addEventListener('click', handlerDelete);
-  placeContainer.querySelector('.place__icon').addEventListener('click', handlerLike);
-  placeContainer.querySelector('.place__image').addEventListener('click', handlerCardPopup);
+  placeElementAdd.querySelector('.place__delete').addEventListener('click', handlerDelete);
+  placeElementAdd.querySelector('.place__icon').addEventListener('click', handlerLike);
+  placeElementAdd.querySelector('.place__image').addEventListener('click', handlerCardPopup);
+
+  placeContainer.prepend(placeElementAdd);
 
 }
 
