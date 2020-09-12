@@ -20,6 +20,7 @@ const formElementCard= document.querySelector('.popup_el_card');
 
 const placeContainer= document.querySelector('.places__list');
 
+
 //массив карточек
 const initialCards = [
   {
@@ -55,7 +56,6 @@ function render() {
   initialCards.forEach(item => {
     const placeTemplate = document.querySelector('#places').content;
     const placeElement = placeTemplate.cloneNode(true);
-
     placeElement.querySelector('.place__image').src = item.link;
     placeElement.querySelector('.place__image').alt = item.name;;
     placeElement.querySelector('.place__name').textContent = item.name;
@@ -114,11 +114,14 @@ const formSubmitHandler = (evt, element) => {
       userName.textContent = nameInputEdit.value;
       aboutSelf.textContent = jobInputEdit.value;
     } else if (element.classList.contains('popup_el_add')) {
-      initialCards.unshift({
-        name: evt.target.querySelector('.popup__item_el_name').value,
-        link: evt.target.querySelector('.popup__item_el_url').value,
-      });
-      render();
+      const placeTemplateAdd = document.querySelector('#places').content;
+      const placeElementAdd = placeTemplateAdd.cloneNode(true);
+      placeElementAdd.querySelector('.place__image').src = evt.target.querySelector('.popup__item_el_url').value;
+      placeElementAdd.querySelector('.place__image').alt = evt.target.querySelector('.popup__item_el_name').value;
+      placeElementAdd.querySelector('.place__name').textContent = evt.target.querySelector('.popup__item_el_name').value;
+      placeContainer.prepend(placeElementAdd);
+      
+      setListeners();
     };
     formStatus(evt, element);
 }
