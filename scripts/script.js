@@ -15,10 +15,12 @@ const formElementAdd = document.querySelector('.popup_el_add');
 const closeButtonAdd = formElementAdd.querySelector('.popup__close');
 const submitButtonAdd = formElementAdd.querySelector('.popup__button');
 
-
 const formElementCard= document.querySelector('.popup_el_card');
+const closeButtonCard = formElementCard.querySelector('.popup__close');
 
 const placeContainer= document.querySelector('.places__list');
+
+const placeTemplate = document.querySelector('#places').content;
 
 
 //массив карточек
@@ -52,12 +54,12 @@ const initialCards = [
 
 //инициализация карточек с местами
 function render() {
-  placeContainer.innerHTML = "";
+  //placeContainer.innerHTML = "";
   initialCards.forEach(item => {
-    const placeTemplate = document.querySelector('#places').content;
     const placeElement = placeTemplate.cloneNode(true);
-    placeElement.querySelector('.place__image').src = item.link;
-    placeElement.querySelector('.place__image').alt = item.name;;
+    const placeElementImage = placeElement.querySelector('.place__image');
+    placeElementImage.src = item.link;
+    placeElementImage.alt = item.name;;
     placeElement.querySelector('.place__name').textContent = item.name;
     placeContainer.append(placeElement);
   });
@@ -68,14 +70,16 @@ function render() {
 
 //добавление карточек
 function handlerAdd(evt) {
-  const placeTemplateAdd = document.querySelector('#places').content;
-  const placeElementAdd = placeTemplateAdd.cloneNode(true);
-  placeElementAdd.querySelector('.place__image').src = evt.target.querySelector('.popup__item_el_url').value;
-  placeElementAdd.querySelector('.place__image').alt = evt.target.querySelector('.popup__item_el_name').value;
+  const placeElementAdd = placeTemplate.cloneNode(true);
+  const placeElementAddImage = placeElementAdd.querySelector('.place__image');
+  placeElementAddImage.src = evt.target.querySelector('.popup__item_el_url').value;
+  placeElementAddImage.alt = evt.target.querySelector('.popup__item_el_name').value;
   placeElementAdd.querySelector('.place__name').textContent = evt.target.querySelector('.popup__item_el_name').value;
   placeContainer.prepend(placeElementAdd);
 
-  setListeners();
+  placeContainer.querySelector('.place__delete').addEventListener('click', handlerDelete);
+  placeContainer.querySelector('.place__icon').addEventListener('click', handlerLike);
+  placeContainer.querySelector('.place__image').addEventListener('click', handlerCardPopup);
 
 }
 
@@ -91,19 +95,12 @@ function handlerLike(evt) {
 
 //открытие попап формы с карточкой
 function handlerCardPopup(evt) {
-  formElementCard.innerHTML = "";
-  const cardTemplate = document.querySelector('#cards').content;
-  const cardElement = cardTemplate.cloneNode(true);
-
-  cardElement.querySelector('.popup__card-image').src = evt.target.parentNode.querySelector('.place__image').src;
-  cardElement.querySelector('.popup__card-image').alt = evt.target.parentNode.querySelector('.place__image').alt;
-  cardElement.querySelector('.popup__card-heading').textContent = evt.target.parentNode.querySelector('.place__name').textContent;
-  formElementCard.append(cardElement);
+  formElementCard.querySelector('.popup__card-image').src = evt.target.parentNode.querySelector('.place__image').src;
+  formElementCard.querySelector('.popup__card-image').alt = evt.target.parentNode.querySelector('.place__image').alt;
+  formElementCard.querySelector('.popup__card-heading').textContent = evt.target.parentNode.querySelector('.place__name').textContent;
 
   formStatus(evt, formElementCard);
 
-  const closeButtonCard = formElementCard.querySelector('.popup__close');
-  closeButtonCard.addEventListener('click', evt => formStatus(evt, formElementCard));
 }
 
 //открытие-закрытие форм
@@ -148,19 +145,18 @@ function setListeners() {
 
 }
 
-//установка свойств для плавного закрытия попапа
-function ready() {
-  document.querySelectorAll('.popup').forEach(el => {
-      el.classList.add('popup__load');
-    });
-}
-
 editButton.addEventListener('click', evt => formStatus(evt, formElementEdit));
 addButton.addEventListener('click', evt => formStatus(evt, formElementAdd));
 closeButtonEdit.addEventListener('click', evt => formStatus(evt, formElementEdit));
 closeButtonAdd.addEventListener('click', evt => formStatus(evt, formElementAdd));
+closeButtonCard.addEventListener('click', evt => formStatus(evt, formElementCard));
 formElementEdit.addEventListener('submit', evt => formSubmitHandler(evt, formElementEdit));
 formElementAdd.addEventListener('submit', evt => formSubmitHandler(evt, formElementAdd));
 
 render();
-document.addEventListener("load", ready());
+document.addEventListener('DOMContentLoaded', function() {
+  //установка свойств для плавного закрытия попапа
+  document.querySelectorAll('.popup').forEach(el => {
+    el.classList.add('popup__load');
+  });
+}, false);
