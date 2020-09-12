@@ -54,7 +54,6 @@ const initialCards = [
 
 //инициализация карточек с местами
 function render() {
-  //placeContainer.innerHTML = "";
   initialCards.forEach(item => {
     const placeElement = placeTemplate.cloneNode(true);
     const placeElementImage = placeElement.querySelector('.place__image');
@@ -72,9 +71,10 @@ function render() {
 function handlerAdd(evt) {
   const placeElementAdd = placeTemplate.cloneNode(true);
   const placeElementAddImage = placeElementAdd.querySelector('.place__image');
+  const popupImageName = evt.target.querySelector('.popup__item_el_name');
   placeElementAddImage.src = evt.target.querySelector('.popup__item_el_url').value;
-  placeElementAddImage.alt = evt.target.querySelector('.popup__item_el_name').value;
-  placeElementAdd.querySelector('.place__name').textContent = evt.target.querySelector('.popup__item_el_name').value;
+  placeElementAddImage.alt = popupImageName.value;
+  placeElementAdd.querySelector('.place__name').textContent = popupImageName.value;
 
   placeElementAdd.querySelector('.place__delete').addEventListener('click', handlerDelete);
   placeElementAdd.querySelector('.place__icon').addEventListener('click', handlerLike);
@@ -96,8 +96,10 @@ function handlerLike(evt) {
 
 //открытие попап формы с карточкой
 function handlerCardPopup(evt) {
-  formElementCard.querySelector('.popup__card-image').src = evt.target.parentNode.querySelector('.place__image').src;
-  formElementCard.querySelector('.popup__card-image').alt = evt.target.parentNode.querySelector('.place__image').alt;
+  const elementCardPopup = formElementCard.querySelector('.popup__card-image');
+  const elementCardClick = evt.target.parentNode.querySelector('.place__image');
+  elementCardPopup.src = elementCardClick.src;
+  elementCardPopup.alt = elementCardClick.alt;
   formElementCard.querySelector('.popup__card-heading').textContent = evt.target.parentNode.querySelector('.place__name').textContent;
 
   formStatus(evt, formElementCard);
