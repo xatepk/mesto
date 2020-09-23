@@ -114,8 +114,8 @@ function formStatus(element) {
     function keyHandler(evt) {
       if (evt.key === 'Escape') {
         formStatus(element);
-        document.removeEventListener('keydown', keyHandler);
       }
+      document.removeEventListener('keydown', keyHandler);
     }
   }
 
