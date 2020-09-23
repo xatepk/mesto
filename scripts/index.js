@@ -5,6 +5,7 @@ const aboutSelf = profile.querySelector('.profile__about-self');
 const editButton = profile.querySelector('.profile__edit-button');
 const addButton = profile.querySelector('.profile__add-button');
 
+const popup = document.querySelectorAll('.popup');
 const formElementEdit = document.querySelector('.popup_el_edit');
 const nameInputEdit = formElementEdit.querySelector('.popup__item_el_name');
 const jobInputEdit = formElementEdit.querySelector('.popup__item_el_about-self');
@@ -97,25 +98,42 @@ function cardPopupHandler(evt) {
   elementCardPopup.alt = elementCardClick.alt;
   cardHeading.textContent = evt.target.parentNode.querySelector('.place__name').textContent;
 
-  formStatus(evt, formElementCard);
+  formStatus(formElementCard);
 
 }
 
 //открытие-закрытие форм
-function formStatus(evt, element) {
+function formStatus(element) {
   element.classList.toggle('popup_opened');
+  if (element.classList.contains('popup_opened')) {
+
+    document.addEventListener('keydown', keyHandler);
+    element.addEventListener('click', popupClickOnOverlay);
+
+    //закрытие форм кнопкой Esc
+    function keyHandler(evt) {
+      if (evt.key === 'Escape') {
+        formStatus(element);
+        document.removeEventListener('keydown', keyHandler);
+      }
+    }
+  }
+
   if (formElementEdit.classList.contains('popup_opened')) {
 
     nameInputEdit.value = userName.textContent;
     jobInputEdit.value = aboutSelf.textContent;
 
-  } else if (formElementAdd.classList.contains('popup_opened')) {
-
-    popupImageName.value = "";
-    popupImageUrl.value = "";
-
   }
 }
+
+//закрытие форм при клике на оверлей
+const popupClickOnOverlay = (evt) => {
+  if (evt.target = evt.currentTarget) {
+    formStatus(evt.target);
+  }
+}
+
 
 //обработчик события submit формы
 const formSubmitHandler = (evt, element) => {
@@ -126,25 +144,27 @@ const formSubmitHandler = (evt, element) => {
       userName.textContent = nameInputEdit.value;
       aboutSelf.textContent = jobInputEdit.value;
     } else if (element.classList.contains('popup_el_add')) {
-      const placeElement = addHandler(popupImageUrl.value, popupImageName.value)
+      const placeElement = addHandler(popupImageUrl.value, popupImageName.value);
+      const formElement = element.querySelector('.popup__form');
       placeContainer.prepend(placeElement);
+      formElement.reset();
     };
 
-    formStatus(evt, element);
+    formStatus(element);
 }
 
-editButton.addEventListener('click', evt => formStatus(evt, formElementEdit));
-addButton.addEventListener('click', evt => formStatus(evt, formElementAdd));
-closeButtonEdit.addEventListener('click', evt => formStatus(evt, formElementEdit));
-closeButtonAdd.addEventListener('click', evt => formStatus(evt, formElementAdd));
-closeButtonCard.addEventListener('click', evt => formStatus(evt, formElementCard));
+editButton.addEventListener('click', () => formStatus(formElementEdit));
+addButton.addEventListener('click', () => formStatus(formElementAdd));
+closeButtonEdit.addEventListener('click', () => formStatus(formElementEdit));
+closeButtonAdd.addEventListener('click', () => formStatus(formElementAdd));
+closeButtonCard.addEventListener('click', () => formStatus(formElementCard));
 formElementEdit.addEventListener('submit', evt => formSubmitHandler(evt, formElementEdit));
 formElementAdd.addEventListener('submit', evt => formSubmitHandler(evt, formElementAdd));
 
 render();
 document.addEventListener('DOMContentLoaded', function() {
   //установка свойств для плавного закрытия попапа
-  document.querySelectorAll('.popup').forEach(el => {
+  popup.forEach(el => {
     el.classList.add('popup__load');
   });
 }, false);
