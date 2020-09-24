@@ -98,28 +98,28 @@ function cardPopupHandler(evt) {
   elementCardPopup.alt = elementCardClick.alt;
   cardHeading.textContent = evt.target.parentNode.querySelector('.place__name').textContent;
 
-  formStatus(formElementCard);
+  formStatus(evt, formElementCard);
 
 }
 
 //открытие-закрытие форм
-function formStatus(element) {
+function formStatus(evt, element) {
   element.classList.toggle('popup_opened');
   if (element.classList.contains('popup_opened')) {
 
-    document.addEventListener('keydown', keyHandler);
     element.addEventListener('click', popupClickOnOverlay);
+    document.addEventListener('keydown', keyHandler);
 
     //закрытие форм кнопкой Esc
     function keyHandler(evt) {
       if (evt.key === 'Escape') {
-        formStatus(element);
+        formStatus(evt, element);
       }
       document.removeEventListener('keydown', keyHandler);
     }
   }
 
-  if (formElementEdit.classList.contains('popup_opened')) {
+  if (formElementEdit.classList.contains('popup_opened') && (editButton === evt.currentTarget)) {
 
     nameInputEdit.value = userName.textContent;
     jobInputEdit.value = aboutSelf.textContent;
@@ -130,7 +130,7 @@ function formStatus(element) {
 //закрытие форм при клике на оверлей
 const popupClickOnOverlay = (evt) => {
   if (evt.target = evt.currentTarget) {
-    formStatus(evt.target);
+    formStatus(evt, evt.target);
   }
 }
 
@@ -150,14 +150,14 @@ const formSubmitHandler = (evt, element) => {
       formElement.reset();
     };
 
-    formStatus(element);
+    formStatus(evt, element);
 }
 
-editButton.addEventListener('click', () => formStatus(formElementEdit));
-addButton.addEventListener('click', () => formStatus(formElementAdd));
-closeButtonEdit.addEventListener('click', () => formStatus(formElementEdit));
-closeButtonAdd.addEventListener('click', () => formStatus(formElementAdd));
-closeButtonCard.addEventListener('click', () => formStatus(formElementCard));
+editButton.addEventListener('click', evt => formStatus(evt, formElementEdit));
+addButton.addEventListener('click', evt => formStatus(evt, formElementAdd));
+closeButtonEdit.addEventListener('click', evt => formStatus(evt, formElementEdit));
+closeButtonAdd.addEventListener('click', evt => formStatus(evt, formElementAdd));
+closeButtonCard.addEventListener('click', evt => formStatus(evt, formElementCard));
 formElementEdit.addEventListener('submit', evt => formSubmitHandler(evt, formElementEdit));
 formElementAdd.addEventListener('submit', evt => formSubmitHandler(evt, formElementAdd));
 
