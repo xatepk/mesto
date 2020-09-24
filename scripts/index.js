@@ -171,9 +171,7 @@ closeButtonAdd.addEventListener('click', evt => togglePopup(evt, formElementAdd)
 closeButtonCard.addEventListener('click', evt => togglePopup(evt, formElementCard));
 formElementEdit.addEventListener('submit', evt => profileFormSubmitHandler(evt, formElementEdit));
 formElementAdd.addEventListener('submit', evt => cardFormSubmitHandler(evt, formElementAdd));
-popup.forEach(el => {
-  el.addEventListener('click', popupClickOnOverlay);
-});
+popup.forEach(el => el.addEventListener('click', popupClickOnOverlay));
 
 render();
 document.addEventListener('DOMContentLoaded', function() {
