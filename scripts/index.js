@@ -110,10 +110,12 @@ function profileFormPopupHandler(evt) {
   }
 }
 
+
 //открытие-закрытие форм
 function togglePopup(evt, element) {
   element.classList.toggle('popup_opened');
   if (element.classList.contains('popup_opened')) {
+    element.querySelector('.popup__button').classList.add('popup__button_disabled');
     document.addEventListener('keydown', keyHandler);
   }
 
