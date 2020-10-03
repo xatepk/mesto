@@ -7,6 +7,7 @@ const addButton = profile.querySelector('.profile__add-button');
 
 const popup = document.querySelectorAll('.popup');
 const profileFormPopup = document.querySelector('.popup_el_edit');
+const profileFormElement = profileFormPopup.querySelector('.popup__form');
 const nameInputEdit = profileFormPopup.querySelector('.popup__item_el_name');
 const jobInputEdit = profileFormPopup.querySelector('.popup__item_el_about-self');
 const closeButtonEdit = profileFormPopup.querySelector('.popup__close');
@@ -106,26 +107,32 @@ function cardPopupHandler(evt) {
 }
 
 //заполнение формы редактирования профиля при открытии
-function profileFormPopupHandler(evt) {
+function profileFormPopupHandler() {
 
   togglePopup(profileFormPopup);
-  toggleButtonSubmit(profileFormPopup);
+  resetInputError(profileFormElement);
+  submitButtonEdit.classList.add('popup__button_disabled');
 
   nameInputEdit.value = userName.textContent;
   jobInputEdit.value = aboutSelf.textContent;
 }
 
 //заполнение формы добавления карточек при открытии
-function cardFormPopupHandler(evt) {
+function cardFormPopupHandler() {
 
   togglePopup(cardFormPopup);
   cardFormElement.reset();
-  toggleButtonSubmit(cardFormPopup);
+  resetInputError(cardFormElement);
+  submitButtonAdd.classList.add('popup__button_disabled')
 }
 
-//деактивация кнопки сабмит при открытии форм
-function toggleButtonSubmit(element) {
-  element.querySelector('.popup__button').classList.add('popup__button_disabled');
+//обнуление ошибок
+function resetInputError(formElement) {
+  const inputList = Array.from(formElement.querySelectorAll(inputData.inputSelector));
+
+  inputList.forEach((inputElement) => {
+    hideInputError(formElement, inputElement);
+  });
 }
 
 //открытие-закрытие форм
@@ -140,8 +147,8 @@ function togglePopup(element) {
 function keyHandler(evt) {
   if (evt.key === keyEscape) {
     document.querySelector('.popup_opened').classList.remove('popup_opened');
+    document.removeEventListener('keydown', keyHandler);
   }
-  document.removeEventListener('keydown', keyHandler);
 }
 
 //закрытие форм при клике на оверлей
