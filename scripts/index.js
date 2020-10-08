@@ -107,7 +107,7 @@ function resetInputError(formElement) {
 
   inputList.forEach((inputElement) => {
     const form = new FormValidator(inputData, formElement);
-    const formValidator = form.hideInputError(inputElement);
+    const formValidator = form._hideInputError(inputElement);
   });
 }
 
