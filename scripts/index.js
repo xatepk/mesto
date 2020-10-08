@@ -8,7 +8,7 @@ const aboutSelf = profile.querySelector('.profile__about-self');
 const editButton = profile.querySelector('.profile__edit-button');
 const addButton = profile.querySelector('.profile__add-button');
 
-const popup = document.querySelectorAll('.popup');
+const popups = document.querySelectorAll('.popup');
 const profileFormPopup = document.querySelector('.popup_el_edit');
 const profileFormElement = profileFormPopup.querySelector('.popup__form');
 const nameInputEdit = profileFormPopup.querySelector('.popup__item_el_name');
@@ -41,48 +41,19 @@ const inputData = {
 
 const formList = Array.from(document.querySelectorAll(inputData.formSelector));
 
-
-//массив карточек
-const initialCards = [
-  {
-      name: 'Камчатка',
-      link: 'https://images.unsplash.com/photo-1556891323-d4da7a4af388?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=934&q=80'
-  },
-  {
-      name: 'Байкал',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  },
-  {
-      name: 'Москва',
-      link: 'https://images.unsplash.com/photo-1520106212299-d99c443e4568?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=934&q=80'
-  },
-  {
-      name: 'Архыз',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-      name: 'Холмогорский район',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-      name: 'Владивосток',
-      link: 'https://images.unsplash.com/photo-1563943078-d83d3fb86468?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=934&q=80'
-
-  }
-];
-
 // инициализация карточек
-function render() {
-  initialCards.forEach(item => {
-    const place = new Card(item.link, item.name, '#places');
-    const placeElement = place.generateCard();
+function render(item) {
+  // initialCards.forEach(item => {
+    const card = new Card(item, '#places');
+    const cardElement = card.generateCard();
 
-    placeContainer.append(placeElement);
-  });
+    return cardElement;
+  //   placeContainer.append(placeElement);
+  // });
 }
 
 //заполнение формы редактирования профиля при открытии
-function profileFormPopupHandler() {
+function initProfileFormPopupHandler() {
 
   togglePopup(profileFormPopup);
   resetInputError(profileFormElement);
@@ -93,7 +64,7 @@ function profileFormPopupHandler() {
 }
 
 //заполнение формы добавления карточек при открытии
-function cardFormPopupHandler() {
+function initCardFormPopupHandler() {
 
   togglePopup(cardFormPopup);
   cardFormElement.reset();
@@ -107,7 +78,7 @@ function resetInputError(formElement) {
 
   inputList.forEach((inputElement) => {
     const form = new FormValidator(inputData, formElement);
-    const formValidator = form._hideInputError(inputElement);
+    const formValidator = form.resetInputError(inputElement);
   });
 }
 
@@ -115,20 +86,21 @@ function resetInputError(formElement) {
 export function togglePopup(element) {
   element.classList.toggle('popup_opened');
   if (element.classList.contains('popup_opened')) {
-    document.addEventListener('keydown', keyHandler);
+    document.addEventListener('keydown', handleEscPress);
+  } else {
+    document.removeEventListener('keydown', handleEscPress);
   }
 }
 
 //закрытие форм кнопкой Esc
-function keyHandler(evt) {
+function handleEscPress(evt) {
   if (evt.key === keyEscape) {
-    document.querySelector('.popup_opened').classList.remove('popup_opened');
-    document.removeEventListener('keydown', keyHandler);
+    togglePopup(document.querySelector('.popup_opened'));
   }
 }
 
 //закрытие форм при клике на оверлей
-const popupClickOnOverlay = (evt) => {
+const clickOnPopupOverlay = (evt) => {
   if (evt.target == evt.currentTarget) {
 
     togglePopup(evt.target);
@@ -137,7 +109,7 @@ const popupClickOnOverlay = (evt) => {
 
 
 //обработчик события submit формы редактирований
-const profileFormSubmitHandler = (evt) => {
+const editProfileFormSubmitHandler = (evt) => {
 
   evt.preventDefault();
 
@@ -148,36 +120,45 @@ const profileFormSubmitHandler = (evt) => {
 }
 
 //обработчик события submit формы добавления карточки
-const cardFormSubmitHandler = (evt) => {
+const addCardFormSubmitHandler = (evt) => {
 
   evt.preventDefault();
 
-  const place = new Card(popupImageUrl.value, popupImageName.value, '#places');
-  const placeElement = place.generateCard();
+  const item = {
+    name: popupImageName.value,
+    link: popupImageUrl.value
+  }
+
+  const placeElement = render(item);
+  // const place = new Card(item, '#places');
+  // const placeElement = place.generateCard();
 
   placeContainer.prepend(placeElement);
 
   togglePopup(cardFormPopup);
 }
 
-editButton.addEventListener('click', profileFormPopupHandler);
-addButton.addEventListener('click', cardFormPopupHandler);
+editButton.addEventListener('click', initProfileFormPopupHandler);
+addButton.addEventListener('click', initCardFormPopupHandler);
 closeButtonEdit.addEventListener('click', () => togglePopup(profileFormPopup));
 closeButtonAdd.addEventListener('click', () => togglePopup(cardFormPopup));
 closeButtonCard.addEventListener('click', () => togglePopup(cardElementFormPopup));
-profileFormPopup.addEventListener('submit', profileFormSubmitHandler);
-cardFormPopup.addEventListener('submit', cardFormSubmitHandler);
-popup.forEach(el => el.addEventListener('click', popupClickOnOverlay));
-
-render();
+profileFormPopup.addEventListener('submit', editProfileFormSubmitHandler);
+cardFormPopup.addEventListener('submit', addCardFormSubmitHandler);
+popups.forEach(el => el.addEventListener('click', clickOnPopupOverlay));
 
 document.addEventListener('DOMContentLoaded', function() {
   //установка свойств для плавного закрытия попапа
-  popup.forEach(el => el.classList.add('popup__load'));
+  popups.forEach(el => el.classList.add('popup__load'));
 }, false);
 
 formList.forEach((formElement) => {
   const form = new FormValidator(inputData, formElement);
   const formValidator = form.enableValidation();
+});
+
+initialCards.forEach(item => {
+  const placeElement = render(item);
+  placeContainer.append(placeElement);
 });
 

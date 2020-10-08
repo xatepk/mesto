@@ -1,9 +1,9 @@
 import {togglePopup, cardElementFormPopup} from './index.js';
 
 export default class Card {
-  constructor(link, name, cardSelector) {
-    this._name = name;
-    this._link = link;
+  constructor(data, cardSelector) {
+    this._name = data.name;
+    this._link = data.link;
     this._cardSelector = cardSelector;
   }
 
@@ -11,7 +11,8 @@ export default class Card {
     const cardElement = document
       .querySelector(this._cardSelector)
       .content
-      .cloneNode(true);
+      .cloneNode(true)
+      .querySelector('.place');
 
     return cardElement;
   }
@@ -30,34 +31,38 @@ export default class Card {
   }
 
   _setEventListeners() {
-    this._element.querySelector('.place__delete').addEventListener('click', (evt) => {
-      this._delHandler(evt);
+    this._element.querySelector('.place__delete').addEventListener('click', () => {
+      this._delHandler();
     });
-    this._element.querySelector('.place__icon').addEventListener('click', (evt) => {
-      this._likeHandler(evt);
+    this._element.querySelector('.place__icon').addEventListener('click', () => {
+      this._likeHandler();
     });
-    this._element.querySelector('.place__image').addEventListener('click', (evt) => {
-      this._cardPopupHandler(evt);
+    this._element.querySelector('.place__image').addEventListener('click', () => {
+      this._cardPopupHandler();
     });
   }
 
   // удаление карточки
-  _delHandler(evt) {
-    evt.target.parentNode.remove();
+  _delHandler() {
+    // evt.target.parentNode.remove();
+    console.log(this._element);
+    console.log(this._element.querySelector('.place'));
+    this._element.remove();
   }
 
   // установка-сброс лайка с карточки
-  _likeHandler(evt) {
-    evt.target.classList.toggle('place__icon_is-active');
+  _likeHandler() {
+    this._element.querySelector('.place__icon').classList.toggle('place__icon_is-active');
   }
 
   //открытие попап формы с карточкой
-  _cardPopupHandler(evt) {
-    const elementCardClick = evt.target.parentNode.querySelector('.place__image');
+  _cardPopupHandler() {
+    const elementCardClick = this._element.querySelector('.place__image');
     const elementCardPopup = cardElementFormPopup.querySelector('.popup__card-image');
     elementCardPopup.src = elementCardClick.src;
     elementCardPopup.alt = elementCardClick.alt;
-    cardElementFormPopup.querySelector('.popup__card-heading').textContent = evt.target.parentNode.querySelector('.place__name').textContent;
+    cardElementFormPopup.querySelector('.popup__card-heading').textContent =
+      this._element.querySelector('.place__name').textContent;
 
     togglePopup(cardElementFormPopup);
   }
