@@ -43,13 +43,10 @@ const formList = Array.from(document.querySelectorAll(inputData.formSelector));
 
 // инициализация карточек
 function render(item) {
-  // initialCards.forEach(item => {
     const card = new Card(item, '#places');
     const cardElement = card.generateCard();
 
     return cardElement;
-  //   placeContainer.append(placeElement);
-  // });
 }
 
 //заполнение формы редактирования профиля при открытии
@@ -130,14 +127,11 @@ const addCardFormSubmitHandler = (evt) => {
   }
 
   const placeElement = render(item);
-  // const place = new Card(item, '#places');
-  // const placeElement = place.generateCard();
-
   placeContainer.prepend(placeElement);
 
   togglePopup(cardFormPopup);
 }
-
+console.log(cardFormPopup)
 editButton.addEventListener('click', initProfileFormPopupHandler);
 addButton.addEventListener('click', initCardFormPopupHandler);
 closeButtonEdit.addEventListener('click', () => togglePopup(profileFormPopup));
