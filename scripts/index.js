@@ -1,4 +1,5 @@
 import Card from './Card.js';
+import FormValidator from './FormValidator.js';
 
 //объявление глобальных переменных
 const profile = document.querySelector('.profile');
@@ -28,6 +29,17 @@ const closeButtonCard = cardElementFormPopup.querySelector('.popup__close');
 const placeContainer= document.querySelector('.places__list');
 
 const keyEscape = 'Escape';
+
+const inputData = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__button',
+  inactiveButtonClass: 'popup__button_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__error_visible'
+};
+
+const formList = Array.from(document.querySelectorAll(inputData.formSelector));
 
 
 //массив карточек
@@ -94,7 +106,8 @@ function resetInputError(formElement) {
   const inputList = Array.from(formElement.querySelectorAll(inputData.inputSelector));
 
   inputList.forEach((inputElement) => {
-    hideInputError(formElement, inputElement);
+    const form = new FormValidator(inputData, formElement);
+    const formValidator = form.hideInputError(inputElement);
   });
 }
 
@@ -157,7 +170,14 @@ cardFormPopup.addEventListener('submit', cardFormSubmitHandler);
 popup.forEach(el => el.addEventListener('click', popupClickOnOverlay));
 
 render();
+
 document.addEventListener('DOMContentLoaded', function() {
   //установка свойств для плавного закрытия попапа
   popup.forEach(el => el.classList.add('popup__load'));
 }, false);
+
+formList.forEach((formElement) => {
+  const form = new FormValidator(inputData, formElement);
+  const formValidator = form.enableValidation();
+});
+
