@@ -65,18 +65,11 @@ function initCardFormPopupHandler() {
 
   togglePopup(cardFormPopup);
   cardFormElement.reset();
-  resetInputError(cardFormElement);
   submitButtonAdd.classList.add('popup__button_disabled')
-}
 
-//обнуление ошибок
-function resetInputError(formElement) {
-  const inputList = Array.from(formElement.querySelectorAll(inputData.inputSelector));
-
-  inputList.forEach((inputElement) => {
-    const form = new FormValidator(inputData, formElement);
-    const formValidator = form.resetInputError(inputElement);
-  });
+  //обнуление ошибок
+  const form = new FormValidator(inputData, cardFormElement);
+  const formValidator = form.resetInputError();
 }
 
 //открытие-закрытие форм
