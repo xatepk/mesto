@@ -12,7 +12,7 @@ export default class Card {
       .querySelector(this._cardSelector)
       .content
       .cloneNode(true)
-      .querySelector('.place');
+      .children[0];
 
     return cardElement;
   }
@@ -44,9 +44,6 @@ export default class Card {
 
   // удаление карточки
   _delHandler() {
-    // evt.target.parentNode.remove();
-    console.log(this._element);
-    console.log(this._element.querySelector('.place'));
     this._element.remove();
   }
 
