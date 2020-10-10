@@ -53,7 +53,10 @@ function render(item) {
 function initProfileFormPopupHandler() {
 
   togglePopup(profileFormPopup);
-  resetInputError(profileFormElement);
+
+  //обнуление ошибок
+  profileForm.resetInputError();
+
   submitButtonEdit.classList.add('popup__button_disabled');
 
   nameInputEdit.value = userName.textContent;
@@ -65,11 +68,11 @@ function initCardFormPopupHandler() {
 
   togglePopup(cardFormPopup);
   cardFormElement.reset();
-  submitButtonAdd.classList.add('popup__button_disabled')
 
   //обнуление ошибок
-  const form = new FormValidator(inputData, cardFormElement);
-  const formValidator = form.resetInputError();
+  cardForm.resetInputError();
+
+  submitButtonAdd.classList.add('popup__button_disabled')
 }
 
 //открытие-закрытие форм
@@ -139,10 +142,11 @@ document.addEventListener('DOMContentLoaded', function() {
   popups.forEach(el => el.classList.add('popup__load'));
 }, false);
 
-formList.forEach((formElement) => {
-  const form = new FormValidator(inputData, formElement);
-  const formValidator = form.enableValidation();
-});
+
+const cardForm = new FormValidator(inputData, cardFormElement);
+const profileForm = new FormValidator(inputData, profileFormElement);
+const profileFormValidator = profileForm.enableValidation();
+const cardFormValidator = cardForm.enableValidation();
 
 initialCards.forEach(item => {
   const placeElement = render(item);
