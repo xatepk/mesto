@@ -1,0 +1,19 @@
+{
+  "name": "mesto",
+  "version": "0.0.1",
+  "description": "### Обзор",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xatepk/mesto.git"
+  },
+  "author": "Khatya Khakhutaishvili",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/xatepk/mesto/issues"
+  },
+  "homepage": "https://github.com/xatepk/mesto#readme"
+}

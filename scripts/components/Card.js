@@ -1,4 +1,4 @@
-import {togglePopup, cardElementFormPopup} from './index.js';
+import {togglePopup, cardElementFormPopup} from '../index.js';
 
 export default class Card {
   constructor(data, cardSelector) {
