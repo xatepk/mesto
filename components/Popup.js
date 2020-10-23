@@ -3,6 +3,7 @@ import {keyEscape} from '../utils/constants.js';
 export default class Popup {
   constructor ({ popupSelector }) {
     this._element = document.querySelector(popupSelector);
+    this._handleEscClose = this._handleEscClose.bind(this);
   }
 
   open() {
@@ -10,12 +11,12 @@ export default class Popup {
     if (this._element.querySelector('.popup__button')) {
       this._element.querySelector('.popup__button').classList.add('popup__button_disabled');
     }
-    document.addEventListener('keydown', this._handleEscClose.bind(this));
+    document.addEventListener('keydown', this._handleEscClose);
   }
 
   close() {
     this._element.classList.remove('popup_opened');
-    document.removeEventListener('keydown', this._handleEscClose.bind(this));
+    document.removeEventListener('keydown', this._handleEscClose);
   }
 
   _handleEscClose(evt) {
