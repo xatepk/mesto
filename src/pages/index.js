@@ -1,3 +1,4 @@
+import './index.css';
 import Card from '../components/Card.js';
 import FormValidator from '../components/FormValidator.js';
 import Section from '../components/Section.js';
@@ -5,10 +6,11 @@ import PopupWithForm from '../components/PopupWithForm.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import UserInfo from '../components/UserInfo.js';
 import {
-  userName, aboutSelf, editButton, addButton,
+  editButton, addButton,
   popups, profileFormElement, cardFormElement, placeContainer,
   inputData, initialCards
 } from '../utils/constants.js';
+
 
 const cardsList = new Section({
   items: initialCards.reverse(),
@@ -27,17 +29,17 @@ const cardsList = new Section({
   }, placeContainer
 );
 
-editButton.addEventListener('click', () => {
-  const editPopup = new PopupWithForm({
+const editPopup = new PopupWithForm({
   popupSelector: '.popup_el_edit',
   handleFormSubmit: (item) => {
-    const user = new UserInfo(item);
-    const setUserInfo = user.setUserInfo();
+    user.setUserInfo(item);
     editPopup.close();
-    }
-  });
-  const user = new UserInfo({ name: userName.textContent, 'about-self': aboutSelf.textContent});
-  const getUserInfo = user.getUserInfo();
+  }
+});
+
+
+editButton.addEventListener('click', () => {
+  user.getUserInfo();
 
   editPopup.open();
   editPopup.setEventListeners();
@@ -46,31 +48,31 @@ editButton.addEventListener('click', () => {
   profileForm.resetInputError();
 });
 
+const addPopup = new PopupWithForm({
+  popupSelector: '.popup_el_add',
+  handleFormSubmit: (item) => {
+    const {
+      place: name,
+      'place-url': link
+    } = item;
+
+    const cardElement = new Card({
+      item: { name, link },
+      handleCardClick: (card) => {
+        const zoomPopup = new PopupWithImage({ popupSelector: '.popup_el_card', card });
+        zoomPopup.open();
+        zoomPopup.setEventListeners();
+      }
+    }, '#places').generateCard();
+
+    cardsList.addItem(cardElement);
+
+    addPopup.close();
+
+  }
+});
+
 addButton.addEventListener('click', () => {
-  const addPopup = new PopupWithForm({
-    popupSelector: '.popup_el_add',
-    handleFormSubmit: (item) => {
-      const {
-        place: name,
-        'place-url': link
-      } = item;
-
-      const cardElement = new Card({
-        item: { name, link },
-        handleCardClick: (card) => {
-          const zoomPopup = new PopupWithImage({ popupSelector: '.popup_el_card', card });
-          zoomPopup.open();
-          zoomPopup.setEventListeners();
-        }
-      }, '#places').generateCard();
-
-      cardsList.addItem(cardElement);
-
-      addPopup.close();
-
-    }
-  });
-
   addPopup.open();
   addPopup.setEventListeners();
 
@@ -88,6 +90,8 @@ const cardForm = new FormValidator(inputData, cardFormElement);
 const profileForm = new FormValidator(inputData, profileFormElement);
 const profileFormValidator = profileForm.enableValidation();
 const cardFormValidator = cardForm.enableValidation();
+
+const user = new UserInfo({ nameSelector: '.profile__name', jobSelector: '.profile__about-self'});
 
 // отрисовка карточек
 cardsList.renderItems();
