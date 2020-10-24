@@ -18,9 +18,9 @@ export default class Card {
 
   generateCard() {
     this._element = this._getTemplate();
-    const placeImage = this._element.querySelector('.place__image');
-    placeImage.src = this._link;
-    placeImage.alt = this._name;
+    this._placeImage = this._element.querySelector('.place__image');
+    this._placeImage.src = this._link;
+    this._placeImage.alt = this._name;
   	this._element.querySelector('.place__name').textContent = this._name;
 
     // установка обработчиков событий для карточек
@@ -33,10 +33,10 @@ export default class Card {
     this._element.querySelector('.place__delete').addEventListener('click', () => {
       this._delHandler();
     });
-    this._element.querySelector('.place__icon').addEventListener('click', () => {
-      this._likeHandler();
+    this._element.querySelector('.place__icon').addEventListener('click', (evt) => {
+      this._likeHandler(evt);
     });
-    this._element.querySelector('.place__image').addEventListener('click', () => {
+    this._placeImage.addEventListener('click', () => {
       this._handleCardClick(this._element);
     });
   }
@@ -47,7 +47,7 @@ export default class Card {
   }
 
   // установка-сброс лайка с карточки
-  _likeHandler() {
-    this._element.querySelector('.place__icon').classList.toggle('place__icon_is-active');
+  _likeHandler(evt) {
+    evt.target.classList.toggle('place__icon_is-active');
   }
 }

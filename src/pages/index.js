@@ -8,22 +8,26 @@ import UserInfo from '../components/UserInfo.js';
 import {
   editButton, addButton,
   popups, profileFormElement, cardFormElement, placeContainer,
-  inputData, initialCards
+  inputData, initialCards, nameInputEdit, jobInputEdit
 } from '../utils/constants.js';
 
+const zoomPopup = new PopupWithImage({ popupSelector: '.popup_el_card' });
+zoomPopup.setEventListeners();
+
+const createCard = (item) => {
+  const cardElement = new Card({
+    item,
+    handleCardClick: () => {
+      zoomPopup.open(item);
+    }
+  }, '#places').generateCard();
+  return cardElement
+}
 
 const cardsList = new Section({
   items: initialCards.reverse(),
   renderer: (item) => {
-    const cardElement = new Card({
-      item,
-      handleCardClick: (card) => {
-        const zoomPopup = new PopupWithImage({ popupSelector: '.popup_el_card', card });
-        zoomPopup.open();
-        zoomPopup.setEventListeners();
-      }
-    }, '#places').generateCard();
-
+    const cardElement = createCard(item);
     cardsList.addItem(cardElement);
     }
   }, placeContainer
@@ -36,13 +40,14 @@ const editPopup = new PopupWithForm({
     editPopup.close();
   }
 });
+editPopup.setEventListeners();
 
 
 editButton.addEventListener('click', () => {
-  user.getUserInfo();
-
+  const userInfo = user.getUserInfo();
+  nameInputEdit.value = userInfo.name;
+  jobInputEdit.value = userInfo['about-self'];
   editPopup.open();
-  editPopup.setEventListeners();
 
   //обнуление ошибок
   profileForm.resetInputError();
@@ -56,25 +61,17 @@ const addPopup = new PopupWithForm({
       'place-url': link
     } = item;
 
-    const cardElement = new Card({
-      item: { name, link },
-      handleCardClick: (card) => {
-        const zoomPopup = new PopupWithImage({ popupSelector: '.popup_el_card', card });
-        zoomPopup.open();
-        zoomPopup.setEventListeners();
-      }
-    }, '#places').generateCard();
-
+    const cardElement = createCard({name, link})
     cardsList.addItem(cardElement);
 
     addPopup.close();
 
   }
 });
+addPopup.setEventListeners();
 
 addButton.addEventListener('click', () => {
   addPopup.open();
-  addPopup.setEventListeners();
 
   //обнуление ошибок
   cardForm.resetInputError();
@@ -88,8 +85,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 const cardForm = new FormValidator(inputData, cardFormElement);
 const profileForm = new FormValidator(inputData, profileFormElement);
-const profileFormValidator = profileForm.enableValidation();
-const cardFormValidator = cardForm.enableValidation();
+profileForm.enableValidation();
+cardForm.enableValidation();
 
 const user = new UserInfo({ nameSelector: '.profile__name', jobSelector: '.profile__about-self'});
 

@@ -1,20 +1,16 @@
 //объявление глобальных переменных
-export const profile = document.querySelector('.profile');
-export const userName = profile.querySelector('.profile__name');
-export const aboutSelf = profile.querySelector('.profile__about-self');
+const profile = document.querySelector('.profile');
 export const editButton = profile.querySelector('.profile__edit-button');
 export const addButton = profile.querySelector('.profile__add-button');
 
 export const popups = document.querySelectorAll('.popup');
-export const profileFormPopup = document.querySelector('.popup_el_edit');
+const profileFormPopup = document.querySelector('.popup_el_edit');
 export const profileFormElement = profileFormPopup.querySelector('.popup__form');
 export const nameInputEdit = profileFormPopup.querySelector('.popup__item_el_name');
 export const jobInputEdit = profileFormPopup.querySelector('.popup__item_el_about-self');
 
 export const cardFormPopup = document.querySelector('.popup_el_add');
 export const cardFormElement = cardFormPopup.querySelector('.popup__form');
-
-export const cardElementFormPopup = document.querySelector('.popup_el_card');
 
 export const placeContainer = '.places__list';
 
