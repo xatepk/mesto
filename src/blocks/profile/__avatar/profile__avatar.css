@@ -1,6 +1,14 @@
 .profile__avatar {
+  display: inline-block;
   border-radius: 50%;
   width: 120px;
   height: 120px;
   object-fit: cover;
+}
+
+.profile__avatar:hover {
+  background: url('../../../images/edit-avatar.svg') no-repeat center;
+  background-size: 26px 26px;
+  opacity: .2;
+  cursor: pointer;
 }

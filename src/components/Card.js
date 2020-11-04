@@ -1,8 +1,10 @@
 export default class Card {
-  constructor({ item, handleCardClick }, cardSelector) {
+  constructor({ item, handleCardClick, handleCardDelete }, cardSelector) {
     this._name = item.name;
     this._link = item.link;
+    this._likes = item.likes.length;
     this._handleCardClick = handleCardClick;
+    this._handleCardDelete = handleCardDelete;
     this._cardSelector = cardSelector;
   }
 
@@ -21,7 +23,8 @@ export default class Card {
     this._placeImage = this._element.querySelector('.place__image');
     this._placeImage.src = this._link;
     this._placeImage.alt = this._name;
-  	this._element.querySelector('.place__name').textContent = this._name;
+    this._element.querySelector('.place__name').textContent = this._name;
+    this._element.querySelector('.place__likes-count').textContent = this._likes;
 
     // установка обработчиков событий для карточек
     this._setEventListeners();
@@ -31,7 +34,8 @@ export default class Card {
 
   _setEventListeners() {
     this._element.querySelector('.place__delete').addEventListener('click', () => {
-      this._delHandler();
+      // this._delHandler();
+      this._handleCardDelete();
     });
     this._element.querySelector('.place__icon').addEventListener('click', (evt) => {
       this._likeHandler(evt);
@@ -42,9 +46,9 @@ export default class Card {
   }
 
   // удаление карточки
-  _delHandler() {
-    this._element.remove();
-  }
+  // _delHandler() {
+  //   this._element.remove();
+  // }
 
   // установка-сброс лайка с карточки
   _likeHandler(evt) {

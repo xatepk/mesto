@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mesto</title>
 
-  <!-- <link rel="stylesheet" href="./pages/index.css"> -->
+  <link rel="stylesheet" href="./pages/index.css">
 </head>
 <body>
   <div class="page">
@@ -70,6 +70,16 @@
       </div>
     </div>
 
+    <div class="popup popup_el_del">
+      <div class="popup__container">
+        <form class="popup__form" method="POST" action="#" name="profile" novalidate>
+          <h2 class="popup__heading">Вы уверены?</h2>
+          <input type="submit" value= "Да" class="popup__confirmation-button">
+        </form>
+        <button type="button" aria-label="close" class="popup__close"></button>
+      </div>
+    </div>
+
     <footer class="footer">
       <p class="footer__copyright">&copy; 2020. Mesto Russia</p>
     </footer>
@@ -82,12 +92,15 @@
       <img class="place__image">
       <div class="place__description">
         <h2 class="place__name"></h2>
-        <button class="place__icon" aria-label="place-icon" type="button"></button>
+        <div class="place__likes">
+          <button class="place__icon" aria-label="place-icon" type="button"></button>
+          <span class="place__likes-count"></span>
+        </div>
       </div>
       <button class="place__delete" aria-label="place-del" type="button"></button>
     </li>
   </template>
 
-  <!-- <script type="module" src="./pages/index.js"></script> -->
+  <script type="module" src="./pages/index.js"></script>
 </body>
 </html>

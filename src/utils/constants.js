@@ -1,5 +1,8 @@
 //объявление глобальных переменных
 const profile = document.querySelector('.profile');
+export const profileName = profile.querySelector('.profile__name');
+export const profileAbout = profile.querySelector('.profile__about-self');
+export const profileAvatar = profile.querySelector('.profile__avatar');
 export const editButton = profile.querySelector('.profile__edit-button');
 export const addButton = profile.querySelector('.profile__add-button');
 
