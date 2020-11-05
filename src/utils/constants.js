@@ -2,7 +2,7 @@
 const profile = document.querySelector('.profile');
 export const profileName = profile.querySelector('.profile__name');
 export const profileAbout = profile.querySelector('.profile__about-self');
-export const profileAvatar = profile.querySelector('.profile__avatar');
+export const profileAvatar = profile.querySelector('.profile__edit-avatar');
 export const editButton = profile.querySelector('.profile__edit-button');
 export const addButton = profile.querySelector('.profile__add-button');
 
@@ -14,6 +14,9 @@ export const jobInputEdit = profileFormPopup.querySelector('.popup__item_el_abou
 
 export const cardFormPopup = document.querySelector('.popup_el_add');
 export const cardFormElement = cardFormPopup.querySelector('.popup__form');
+
+const avatarFormPopup = document.querySelector('.popup_el_avatar');
+export const avatarFormElement = avatarFormPopup.querySelector('.popup__form');
 
 export const placeContainer = '.places__list';
 

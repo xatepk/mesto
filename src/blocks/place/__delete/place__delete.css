@@ -1,4 +1,5 @@
 .place__delete {
+  display: none;
   border: none;
   width: 18px;
   height: 19px;

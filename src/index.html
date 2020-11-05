@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mesto</title>
 
-  <link rel="stylesheet" href="./pages/index.css">
+  <!-- <link rel="stylesheet" href="./pages/index.css"> -->
 </head>
 <body>
   <div class="page">
@@ -17,13 +17,14 @@
       <section class="profile">
         <div class="profile__view">
           <img src="./images/profile-avatar.jpeg" alt="фото профиля" class="profile__avatar">
-        <div class="profile__info">
-          <div class="profile__heading">
-            <h1 class="profile__name">Жак-Ив Кусто</h1>
-            <button class="profile__edit-button" aria-label="edit" type="button"></button>
+          <button class="profile__edit-avatar" aria-label="edit" type="button"></button>
+          <div class="profile__info">
+            <div class="profile__heading">
+              <h1 class="profile__name">Жак-Ив Кусто</h1>
+              <button class="profile__edit-button" aria-label="edit" type="button"></button>
+            </div>
+            <p class="profile__about-self">Исследователь океана</p>
           </div>
-          <p class="profile__about-self">Исследователь океана</p>
-        </div>
         </div>
 
         <button class="profile__add-button" aria-label="add" type="button"></button>
@@ -80,6 +81,18 @@
       </div>
     </div>
 
+    <div class="popup popup_el_avatar">
+      <div class="popup__container">
+        <form class="popup__form" method="POST" action="#" name="place" novalidate>
+          <h2 class="popup__heading">Обновить аватар</h2>
+          <input type="url" name="avatar-url" class="popup__item popup__item_el_url popup__input" placeholder="Ссылка на картинку" id="avatar-url-input" required autocomplete="off">
+          <span class='popup__input-error' id='avatar-url-input-error'></span>
+          <input type="submit" value= "Сохранить" class="popup__button">
+        </form>
+        <button type="button" aria-label="close" class="popup__close"></button>
+      </div>
+    </div>
+
     <footer class="footer">
       <p class="footer__copyright">&copy; 2020. Mesto Russia</p>
     </footer>
@@ -101,6 +114,6 @@
     </li>
   </template>
 
-  <script type="module" src="./pages/index.js"></script>
+  <!-- <script type="module" src="./pages/index.js"></script> -->
 </body>
 </html>
