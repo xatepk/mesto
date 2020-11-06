@@ -45,12 +45,10 @@ export default class Card {
 
   _setEventListeners() {
     this._element.querySelector('.place__delete').addEventListener('click', () => {
-      // this._delHandler();
-      this._handleCardDelete();
+      this._handleCardDelete(this);
     });
-    this._element.querySelector('.place__icon').addEventListener('click', (evt) => {
-      // this._likeHandler(evt);
-      this._handleCardLike(evt);
+    this._element.querySelector('.place__icon').addEventListener('click', () => {
+      this._handleCardLike(this);
     });
     this._placeImage.addEventListener('click', () => {
       this._handleCardClick(this._element);
@@ -58,17 +56,19 @@ export default class Card {
   }
 
   // удаление карточки
-  // _delHandler() {
-  //   this._element.remove();
-  // }
+  delHandler() {
+    this._element.remove();
+  }
 
   // установка-сброс лайка с карточки
-  _likeHandler(evt) {
-    evt.target.classList.toggle('place__icon_is-active');
+  likeHandler() {
+    const clickCardLike = this._element.querySelector('.place__icon');
+    clickCardLike.classList.toggle('place__icon_is-active');
+    return clickCardLike.classList.contains('place__icon_is-active');
   }
 
   //установка нового значения о количетве лайках
-   upgrateCardLikes(likes) {
+  updateCardLikes(likes) {
     this._element.querySelector('.place__likes-count').textContent = likes;
    }
 }

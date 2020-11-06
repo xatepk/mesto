@@ -54,14 +54,12 @@ api.getPromises()
         console.log(res);
         const cardElement = createCard(res, _id);
         cardsList.addItem(cardElement);
+        addPopup.close();
       })
       .catch((err) => {
         console.log(err);
       })
       .finally(() => {renderLoading(false, '.popup_el_add')});
-
-      addPopup.close();
-
     }
   });
   addPopup.setEventListeners();
@@ -80,13 +78,13 @@ api.getPromises()
       handleCardClick: () => {
         zoomPopup.open(item);
       },
-      handleCardDelete: () => {
+      handleCardDelete: (context) => {
         const delPopup = new PopupWithForm({
           popupSelector: '.popup_el_del',
           handleFormSubmit: () => {
             api.delCard(item._id)
             .then(() => {
-            cardElement.remove();
+              context.delHandler();
             delPopup.close();
             })
             .catch((err) => {
@@ -98,25 +96,24 @@ api.getPromises()
         delPopup.setEventListeners();
         delPopup.open();
       },
-      handleCardLike: (evt) => {
-        evt.target.classList.toggle('place__icon_is-active');
-        if (evt.target.classList.contains('place__icon_is-active')) {
+      handleCardLike: (context) => {
+        const likeIsActive = context.likeHandler();
+       if (likeIsActive) {
           api.likeCard(item.likes, item._id)
-          .then((result) => {
-            cardElement.querySelector('.place__likes-count').textContent = result.likes.length;
-          })
-          .catch((err) => {
-            console.log(err);
-          });
+            .then((result) => {
+              context.updateCardLikes(result.likes.length);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
         } else {
           api.dislikeCard(item.likes, item._id)
-          .then((result) => {
-            cardElement.querySelector('.place__likes-count').textContent = result.likes.length;
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-
+            .then((result) => {
+              context.updateCardLikes(result.likes.length);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
         }
 
       }
@@ -131,18 +128,16 @@ api.getPromises()
         'avatar-url': avatar
       } = item;
       renderLoading(true, '.popup_el_avatar');
-      user.setUserAvatar({ avatar });
 
       api.saveUserAvatar({ avatar })
-      .then((result) => {
-        console.log(result);
+      .then(() => {
+        user.setUserAvatar({ avatar });
+        editAvatarPopup.close();
         })
       .catch((err) => {
         console.log(err);
       })
       .finally(() => {renderLoading(false, '.popup_el_avatar')});
-
-      editAvatarPopup.close();
     }
   });
   editAvatarPopup.setEventListeners();
@@ -160,20 +155,17 @@ api.getPromises()
   const editPopup = new PopupWithForm({
     popupSelector: '.popup_el_edit',
     handleFormSubmit: (item) => {
-      user.setUserInfo(item);
-
       renderLoading(true, '.popup_el_edit');
 
       api.saveUserInfo(item)
-      .then((result) => {
-        console.log(result);
-        })
+      .then(() => {
+        user.setUserInfo(item);
+        editPopup.close();
+      })
       .catch((err) => {
         console.log(err);
       })
       .finally(() => {renderLoading(false, '.popup_el_edit')});
-
-      editPopup.close();
     }
   });
   editPopup.setEventListeners();
@@ -213,6 +205,4 @@ const avatarForm = new FormValidator(inputData, avatarFormElement);
 profileForm.enableValidation();
 cardForm.enableValidation();
 avatarForm.enableValidation();
-
-// const user = new UserInfo({ nameSelector: '.profile__name', jobSelector: '.profile__about-self', avatarSelector: '.profile__avatar'});
 
