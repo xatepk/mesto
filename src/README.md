@@ -10,7 +10,7 @@
 
 **GitHubPages**
 
-* [Ссылка на страницу в GitHubPages](https://xatepk.github.io/mesto/index.html)
+* [Ссылка на страницу](https://xatepk.github.io/mesto/)
 
 **Планы**
 
